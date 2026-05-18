@@ -1,0 +1,8 @@
+Contact: mailto:sandor@sandorbito.com
+Expires: 2027-05-17T00:00:00.000Z
+Preferred-Languages: en, hu, fr
+Canonical: https://sandorbito.com/.well-known/security.txt
+
+# Personal site of Sándor Bitó.
+# Please report any security issues to sandor@sandorbito.com.
+# Thank you.

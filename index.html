@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sándor Bitó — Creator on the Côte d'Azur</title>
+  <meta name="description" content="Photography, indie games and curious experiments from the French Riviera. Founder of BITO GAMES, a Hungarian-born creator living between Linux and the Mediterranean." data-i18n-attr="content:page.desc" />
+  <meta name="theme-color" content="#00ff41" />
+
+  <!-- Security headers -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css?v=17" />
+</head>
+<body>
+  <canvas id="matrix-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-bracket">[</span><span class="logo-text">SÁNDOR</span><span class="logo-divider">/</span><span class="logo-text logo-text--alt">BITÓ</span><span class="logo-bracket">]</span>
+    </div>
+    <nav class="nav">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#photo" data-i18n="nav.photo">Photo</a>
+      <a href="#games" data-i18n="nav.games">Games</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button class="lang-btn" data-lang="en" type="button" aria-label="English">🇬🇧 EN</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn" data-lang="hu" type="button" aria-label="Magyar">🇭🇺 HU</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="terminal-prefix">~/sandor $</div>
+        <h1 class="hero-title">
+          <span class="glitch" data-text="CREATOR" data-i18n="hero.title">CREATOR</span>
+          <span class="hero-title-line2" data-i18n="hero.subtitle">on the French Riviera</span>
+        </h1>
+        <p class="hero-tagline" data-i18n-html="hero.tagline.html">
+          I am Hungarian. Living between Linux and the sea. Photography, indie games, and personal experiments.
+        </p>
+        <div class="hero-meta">
+          <span class="hero-tag" data-i18n="hero.tag.loc">📍 Nice, France</span>
+          <a class="hero-tag" href="#games">🎮 BITO GAMES</a>
+          <a class="hero-tag" href="#photo" data-i18n="hero.tag.photo">📷 Photography</a>
+          <span class="hero-tag">🐧 Linux Mint</span>
+          <span class="hero-tag">💻 Apple &amp; SwiftUI</span>
+        </div>
+        <p class="hero-status">
+          <span class="status-dot"></span>
+          <span data-i18n="hero.status">STATUS: ALWAYS BUILDING SOMETHING</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <h2 class="section-title" data-i18n="about.title">// ABOUT</h2>
+      <div class="about-content">
+        <p data-i18n-html="about.p1.html">
+          I am <strong>Sándor</strong>. Originally from <strong>Hungary</strong>, currently based on the
+          <strong>French Riviera</strong>. I enjoy experimenting across different fields: I photograph
+          using legacy digital cameras, develop games on <strong>Linux</strong>, and build applications
+          and games for <strong>Apple platforms</strong> (macOS, iOS, iPadOS) using SwiftUI. I am also
+          deeply interested in the connection between <strong>artificial intelligence</strong> and
+          <strong>digital education</strong>.
+        </p>
+        <p data-i18n-html="about.p2.html">
+          <strong>BITO GAMES</strong> is my indie game studio. The photos on this site were taken along
+          the Riviera. My developments focusing on the Apple ecosystem will be detailed on a separate page.
+        </p>
+        <p class="about-philosophy">
+          <span class="quote-mark">&laquo;</span>
+          <span data-i18n="about.philosophy">I create because the intersection of technology and creativity offers the deepest understanding of the world.</span>
+          <span class="quote-mark">&raquo;</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="photo" id="photo">
+      <h2 class="section-title" data-i18n="photo.title">// PHOTOGRAPHY</h2>
+      <p class="section-intro" data-i18n="photo.text">Photos: Shot on older digital cameras.</p>
+      <div class="photo-window" id="photo-window" aria-label="Photos">
+        <span class="photo-window-count" id="photo-window-count" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <section class="games" id="games">
+      <h2 class="section-title" data-i18n="games.title">// GAMES</h2>
+      <div class="games-feature">
+        <div class="games-feature-text">
+          <div class="games-logo">[BITO/GAMES]</div>
+          <h3 data-i18n="games.h3">Independent software and game development studio.</h3>
+          <p data-i18n="games.focus">Focus: Designing native applications and games for desktop (Linux, macOS) and mobile (iOS, iPadOS, Android) platforms.</p>
+          <p data-i18n="games.p">Currently in development: Project Nova (working title) — a cyberpunk city builder. Developed natively for Linux and macOS.</p>
+          <a class="cta-link" href="https://bitogames.com" target="_blank" rel="noopener" data-i18n="games.cta">
+            Visit bitogames.com &rarr;
+          </a>
+        </div>
+      </div>
+
+      <div class="games-roadmap">
+        <div class="games-roadmap-badge" data-i18n="dev.badge">IN DEVELOPMENT</div>
+
+        <div class="games-roadmap-blocks">
+          <div class="games-roadmap-block">
+            <div class="games-roadmap-label" data-i18n="dev.main.label">[MAIN PROJECT]</div>
+            <p class="games-roadmap-lead" data-i18n="dev.main.title">Project Nova (working title) — cyberpunk city builder</p>
+            <ul class="games-roadmap-list">
+              <li data-i18n="dev.main.engine">Engine: Godot 4</li>
+              <li data-i18n="dev.main.status">Status: Prototype phase</li>
+              <li data-i18n="dev.main.platforms">Platforms: Linux, macOS, iOS, iPadOS, Android</li>
+            </ul>
+          </div>
+
+          <div class="games-roadmap-block">
+            <div class="games-roadmap-label" data-i18n="dev.side.label">[ACTIVE SIDE PROJECTS]</div>
+            <p data-i18n="dev.side.intro">Smaller-scale, standalone applications and experimental games. These projects will be published on isolated subpages.</p>
+            <p data-i18n="dev.side.swiftui">SwiftUI: Native applications and games for the Apple ecosystem (macOS, iOS, iPadOS).</p>
+            <p data-i18n="dev.side.python">Python: Developer tools, data analysis scripts, and desktop utilities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2 class="section-title" data-i18n="exp.title">// INTERNAL SYSTEMS &amp; AUTOMATION</h2>
+      <p class="section-intro" data-i18n="exp.intro">
+        Workflow-supporting systems and data analysis tools developed for personal use. Focus: Python, desktop Linux environments, and automation. In the age of AI, structural, systems-level, critical, and creative thinking are essential.
+      </p>
+      <div class="project-grid">
+        <div class="project-card">
+          <h4 data-i18n="exp.kozlony.title">Official Gazette Analyzer</h4>
+          <p data-i18n="exp.kozlony.p">Daily data extraction and content analysis from the Hungarian Official Gazette. Automated execution via systemd timer, utilizing the existing Claude environment.</p>
+          <span class="project-tag" data-i18n="exp.kozlony.tag">Tech: Python · systemd · Claude</span>
+        </div>
+        <div class="project-card">
+          <h4 data-i18n="exp.naplo.title">Life Journal Data Logger</h4>
+          <p data-i18n="exp.naplo.p">Minimalist graphical interface for daily data collection. Structured logging system for long-term personal data analysis.</p>
+          <span class="project-tag" data-i18n="exp.naplo.tag">Tech: Python · Tkinter</span>
+        </div>
+        <div class="project-card">
+          <h4 data-i18n="exp.bridge.title">Distributed AI Bridge</h4>
+          <p data-i18n="exp.bridge.p">Asynchronous data exchange between the Linux workstation and the macOS client. The models process information via a locally synchronized file system.</p>
+          <span class="project-tag" data-i18n="exp.bridge.tag">Tech: Syncthing · Claude · Local network</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="signup" id="contact">
+      <div class="signup-box">
+        <h2 class="section-title" data-i18n="contact.title">// CONTACT</h2>
+        <div class="contact-links">
+          <a href="mailto:sandor@sandorbito.com" class="contact-btn">
+            <span class="contact-btn-label" data-i18n="contact.email.label">EMAIL</span>
+            <span class="contact-btn-value">sandor@sandorbito.com</span>
+          </a>
+          <a href="https://github.com/sandorbito" target="_blank" rel="noopener" class="contact-btn">
+            <span class="contact-btn-label" data-i18n="contact.github.label">GITHUB</span>
+            <span class="contact-btn-value">@sandorbito</span>
+          </a>
+          <a href="https://www.linkedin.com/in/sandorbito/" target="_blank" rel="noopener" class="contact-btn">
+            <span class="contact-btn-label" data-i18n="contact.linkedin.label">LINKEDIN</span>
+            <span class="contact-btn-value">@sandorbito</span>
+          </a>
+          <a href="https://bitogames.com" target="_blank" rel="noopener" class="contact-btn">
+            <span class="contact-btn-label" data-i18n="contact.studio.label">STUDIO</span>
+            <span class="contact-btn-value">bitogames.com</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">[SÁNDOR/BITÓ]</div>
+      <div class="footer-links">
+        <a href="mailto:sandor@sandorbito.com">sandor@sandorbito.com</a>
+        <span class="sep">·</span>
+        <a href="https://github.com/sandorbito" target="_blank" rel="noopener">github</a>
+        <span class="sep">·</span>
+        <a href="https://www.linkedin.com/in/sandorbito/" target="_blank" rel="noopener">linkedin</a>
+        <span class="sep">·</span>
+        <a href="https://bitogames.com" target="_blank" rel="noopener">bitogames.com</a>
+      </div>
+      <div class="footer-copy" data-i18n="footer.copy">
+        &copy; 2026 Sándor Bitó · Côte d'Azur · Made on Linux
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-stage">
+      <img class="lightbox-img" id="lightbox-img" alt="" />
+    </div>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+    <button class="lightbox-btn lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <button class="lightbox-btn lightbox-prev" id="lightbox-prev" aria-label="Previous">‹</button>
+    <button class="lightbox-btn lightbox-next" id="lightbox-next" aria-label="Next">›</button>
+  </div>
+
+  <script src="matrix.js?v=17"></script>
+  <script src="gallery.js?v=17"></script>
+  <script src="translations.js?v=17"></script>
+</body>
+</html>
