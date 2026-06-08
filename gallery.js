@@ -1,44 +1,67 @@
-// Curated photo set for the green photo-window card.
-// Empty card by default — click opens a lightbox with these photos.
-// Source: "Linuxnak a sandorbito.com-ra" SSD folder, processed 2026-05-18
-// (max 2400px long side, JPEG q=92 — visually lossless for web).
+/* =====================================================================
+   gallery.js — sandorbito.com photography
+   Builds a modern responsive masonry grid (#photo-grid) from the curated
+   set, lazy-loading thumbnails, and wires the lightbox (full-size image,
+   prev / next / keyboard, restored focus). Restyled neutral + warm caption.
+   Source: images/curated/ — processed 2026-05-18 (visually lossless for web).
+   ===================================================================== */
+
+// Curated photo set. `thumb` feeds the grid (fast, lazy); `full` the lightbox.
 const CURATED_PHOTOS = [
-  { full: 'images/curated/curated-01.jpg' },
-  { full: 'images/curated/curated-02.jpg' },
-  { full: 'images/curated/curated-03.jpg' },
-  { full: 'images/curated/curated-04.jpg' },
-  { full: 'images/curated/curated-05.jpg' },
-  { full: 'images/curated/curated-06.jpg' },
-  { full: 'images/curated/curated-07.jpg' },
-  { full: 'images/curated/curated-08.jpg' },
-  { full: 'images/curated/curated-09.jpg' },
-  { full: 'images/curated/curated-10.jpg' },
+  { full: 'images/curated/curated-01.jpg', thumb: 'images/curated/curated-01-thumb.jpg' },
+  { full: 'images/curated/curated-02.jpg', thumb: 'images/curated/curated-02-thumb.jpg' },
+  { full: 'images/curated/curated-03.jpg', thumb: 'images/curated/curated-03-thumb.jpg' },
+  { full: 'images/curated/curated-04.jpg', thumb: 'images/curated/curated-04-thumb.jpg' },
+  { full: 'images/curated/curated-05.jpg', thumb: 'images/curated/curated-05-thumb.jpg' },
+  { full: 'images/curated/curated-06.jpg', thumb: 'images/curated/curated-06-thumb.jpg' },
+  { full: 'images/curated/curated-07.jpg', thumb: 'images/curated/curated-07-thumb.jpg' },
+  { full: 'images/curated/curated-08.jpg', thumb: 'images/curated/curated-08-thumb.jpg' },
+  { full: 'images/curated/curated-09.jpg', thumb: 'images/curated/curated-09-thumb.jpg' },
+  { full: 'images/curated/curated-10.jpg', thumb: 'images/curated/curated-10-thumb.jpg' },
 ];
 
-// Count badge + click-to-open binding
 (function () {
-  const win = document.getElementById('photo-window');
-  if (!win) return;
+  'use strict';
 
-  const countEl = document.getElementById('photo-window-count');
-  if (countEl) {
-    countEl.dataset.photoCount = String(CURATED_PHOTOS.length);
-    const render = () => {
-      const lang = document.documentElement.lang || 'en';
-      const n = parseInt(countEl.dataset.photoCount, 10);
-      if (lang === 'hu') {
-        countEl.textContent = `▷  ${n} KÉP`;
-      } else {
-        countEl.textContent = `▷  ${n} ${n === 1 ? 'PHOTO' : 'PHOTOS'}`;
-      }
-    };
-    render();
-    document.addEventListener('sb:langchange', render);
+  /* ----------------------- build the grid ------------------------- */
+  const grid = document.getElementById('photo-grid');
+
+  function altFor(index) {
+    const lang = document.documentElement.lang || 'en';
+    return lang === 'hu'
+      ? `Fotó a Côte d'Azur partvidékéről — ${index + 1}. kép`
+      : `Photograph from the Côte d'Azur — frame ${index + 1}`;
   }
-})();
 
-// Lightbox: opens on photo-window click, navigates with prev/next/keyboard
-(function () {
+  if (grid) {
+    const frag = document.createDocumentFragment();
+    CURATED_PHOTOS.forEach((photo, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'photo__item';
+      btn.setAttribute('data-index', String(i));
+
+      const img = document.createElement('img');
+      img.src = photo.thumb;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.alt = altFor(i);
+
+      btn.appendChild(img);
+      btn.addEventListener('click', () => openLightbox(i));
+      frag.appendChild(btn);
+    });
+    grid.appendChild(frag);
+
+    // Refresh alt text on language change.
+    document.addEventListener('sb:langchange', () => {
+      grid.querySelectorAll('.photo__item img').forEach((img, i) => {
+        img.alt = altFor(i);
+      });
+    });
+  }
+
+  /* --------------------------- lightbox ---------------------------- */
   const lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
 
@@ -48,24 +71,18 @@ const CURATED_PHOTOS = [
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
 
-  let photos = [];
   let currentIndex = 0;
+  let lastFocused = null;
 
-  const win = document.getElementById('photo-window');
-  if (win) {
-    win.addEventListener('click', () => {
-      if (CURATED_PHOTOS.length === 0) return;
-      openLightbox(CURATED_PHOTOS, 0);
-    });
-  }
-
-  function openLightbox(set, idx) {
-    photos = set;
+  function openLightbox(idx) {
+    if (CURATED_PHOTOS.length === 0) return;
+    lastFocused = document.activeElement;
     currentIndex = idx;
     showCurrent();
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    closeBtn.focus();
   }
 
   function closeLightbox() {
@@ -73,38 +90,40 @@ const CURATED_PHOTOS = [
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     imgEl.src = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
   }
 
   function showCurrent() {
-    if (photos.length === 0) return;
-    const photo = photos[currentIndex];
+    const photo = CURATED_PHOTOS[currentIndex];
+    if (!photo) return;
     imgEl.src = photo.full;
-    imgEl.alt = '';
+    imgEl.alt = altFor(currentIndex);
     if (captionEl) {
-      captionEl.textContent = photos.length > 1
-        ? `${currentIndex + 1} / ${photos.length}`
+      captionEl.textContent = CURATED_PHOTOS.length > 1
+        ? `${currentIndex + 1} / ${CURATED_PHOTOS.length}`
         : '';
     }
   }
 
   function nextPhoto() {
-    if (photos.length === 0) return;
-    currentIndex = (currentIndex + 1) % photos.length;
+    currentIndex = (currentIndex + 1) % CURATED_PHOTOS.length;
     showCurrent();
   }
 
   function prevPhoto() {
-    if (photos.length === 0) return;
-    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    currentIndex = (currentIndex - 1 + CURATED_PHOTOS.length) % CURATED_PHOTOS.length;
     showCurrent();
   }
 
-  closeBtn.addEventListener('click', closeLightbox);
-  prevBtn.addEventListener('click', prevPhoto);
-  nextBtn.addEventListener('click', nextPhoto);
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  if (prevBtn) prevBtn.addEventListener('click', prevPhoto);
+  if (nextBtn) nextBtn.addEventListener('click', nextPhoto);
 
+  // Click on the backdrop / stage (but not the image) closes.
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox || e.target.classList.contains('lightbox-stage')) {
+    if (e.target === lightbox || e.target.classList.contains('lightbox__stage')) {
       closeLightbox();
     }
   });
@@ -112,7 +131,7 @@ const CURATED_PHOTOS = [
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('is-open')) return;
     if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') nextPhoto();
-    if (e.key === 'ArrowLeft') prevPhoto();
+    else if (e.key === 'ArrowRight') nextPhoto();
+    else if (e.key === 'ArrowLeft') prevPhoto();
   });
 })();

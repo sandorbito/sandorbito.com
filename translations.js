@@ -1,198 +1,258 @@
-// EN / HU translations for sandorbito.com.
-// Default language: EN. User choice is persisted in localStorage.
-
-const TRANSLATIONS = {
+/* =====================================================================
+   translations.js — sandorbito.com
+   Data-only module: exposes window.TRANSLATIONS. Hydration + the language
+   switch live in script.js (shared NOVA-family i18n convention):
+     - keys ending in ".html" are injected as innerHTML
+     - everything else is textContent (or content/title for META/TITLE)
+   EN is the source of truth; HU + ZH mirror it. Unknown locales fall back to EN.
+   ===================================================================== */
+window.TRANSLATIONS = {
   en: {
-    "page.title": "Sándor Bitó — Creator on the Côte d'Azur",
-    "page.desc": "Photography, indie games and curious experiments from the French Riviera. Founder of BITO GAMES, a Hungarian-born creator living between Linux and the Mediterranean.",
+    "page.title": "Sándor Bitó — Between Linux and the sea",
+    "page.desc": "The personal site of Sándor Bitó: a former ballet dancer turned AI-native indie developer and photographer on the Côte d'Azur. Photography, the NOVA Universe games from BITO Games, and tools built one at a time.",
 
     "nav.about": "About",
-    "nav.photo": "Photo",
+    "nav.photo": "Photography",
     "nav.games": "Games",
-    "nav.projects": "Projects",
+    "nav.toolkit": "Toolkit",
     "nav.contact": "Contact",
 
-    "hero.title": "CREATOR",
-    "hero.subtitle": "on the French Riviera",
-    "hero.tagline.html": "I am Hungarian. Living between Linux and the sea. Photography, indie games, and personal experiments.",
-    "hero.tag.loc": "📍 Nice, France",
-    "hero.tag.photo": "📷 Photography",
+    "hero.eyebrow": "Côte d'Azur · Nice, France",
+    "hero.title": "Sándor Bitó",
+    "hero.subtitle": "Between Linux and the sea.",
+    "hero.tagline.html": "I'm a Hungarian creator on the French Riviera. I spent my first life as a <strong>ballet dancer</strong>; I spend this one building software and making photographs. Same discipline, different stage.",
+    "hero.tag.loc": "Nice, France",
+    "hero.tag.studio": "BITO Games",
+    "hero.tag.photo": "Photography",
+    "hero.tag.linux": "Linux",
+    "hero.tag.apple": "Apple · SwiftUI",
     "hero.status": "STATUS: ALWAYS BUILDING SOMETHING",
+    "hero.cta": "Read the story ↓",
 
-    "about.title": "// ABOUT",
-    "about.p1.html": "I am Sándor. Originally from Hungary, I am currently based on the French Riviera. I enjoy experimenting across different fields: I photograph using legacy digital cameras, develop games on Linux, and build applications and games for Apple platforms (macOS, iOS, iPadOS) using SwiftUI. I am also deeply interested in the connection between artificial intelligence and digital education.",
-    "about.p2.html": "BITO GAMES is my indie game studio. The photos on this site were taken along the Riviera. My developments focusing on the Apple ecosystem will be detailed on a separate page.",
-    "about.philosophy": "I create because the intersection of technology and creativity offers the deepest understanding of the world.",
+    "about.title": "// THE STORY",
+    "about.intro": "Two careers, one obsession: turning discipline into something that looks effortless.",
+    "about.p1.html": "I'm <strong>Sándor</strong>, born in <strong>Hungary</strong>, now living on the <strong>Côte d'Azur</strong>. For years I was a <strong>ballet dancer</strong> — a craft built on relentless repetition, where the goal is to make the impossible look weightless. That training never left me; it just found new stages.",
+    "about.p2.html": "Today I'm an <strong>AI-native indie developer</strong> and a <strong>photographer</strong>. I build games and apps on <strong>Linux</strong> and for <strong>Apple platforms</strong> with SwiftUI, write small <strong>Python</strong> tools for my own work, and shoot the Riviera on older digital cameras. AI lets one person build at a scale that used to take a studio — but the taste, the structure, and the vision stay human.",
+    "about.p3.html": "I'm not chasing the crowd or the hype cycle. I'd rather make a few honest things with care, and ship them native — close to the metal, close to the truth.",
+    "about.philosophy": "I create because the intersection of technology and creativity is where the world becomes clearest to me.",
+    "about.tag.ballet": "Former ballet dancer",
+    "about.tag.builder": "AI-native builder",
+    "about.tag.photographer": "Photographer",
+    "about.tag.place": "Riviera-based",
 
     "photo.title": "// PHOTOGRAPHY",
-    "photo.text": "Photos: Shot on older digital cameras.",
+    "photo.intro": "The Riviera, on older digital cameras — light, water, and the quiet hours.",
+    "photo.text": "Shot around Nice and the Côte d'Azur. Tap any frame to open the gallery.",
+    "photo.lightbox.close": "Close",
+    "photo.lightbox.prev": "Previous",
+    "photo.lightbox.next": "Next",
 
-    "games.title": "// GAMES",
-    "games.h3": "Independent software and game development studio.",
-    "games.focus": "Focus: Designing native applications and games for desktop (Linux, macOS) and mobile (iOS, iPadOS, Android) platforms.",
-    "games.p": "Currently in development: Project Nova (working title) — a cyberpunk city builder. Developed natively for Linux and macOS.",
-    "games.cta": "Visit bitogames.com →",
+    "games.title": "// THE NOVA UNIVERSE",
+    "games.intro": "My indie studio, BITO Games, is building one shared near-future world across two games.",
+    "games.universe.lead.html": "<strong>NOVA Universe</strong> is the continuity that ties my games together — one century, two ways to play it. Both are in development, both built native for Linux and macOS. The full studio lives at <strong>bitogames.com</strong>.",
+    "games.cybercity.badge": "IN DEVELOPMENT",
+    "games.cybercity.title": "CYBER CITY 2089",
+    "games.cybercity.subtitle": "Cyberpunk City Builder",
+    "games.cybercity.desc": "Govern a neon city from the street up — districts, citizens, infrastructure, and the welfare slider that quietly decides who the future is for. A city builder with a conscience.",
+    "games.cybercity.meta.engine": "Engine: Godot 4",
+    "games.cybercity.meta.status": "Status: In development",
+    "games.cybercity.meta.platforms": "Platforms: Linux · macOS (native)",
+    "games.megacorp.badge": "IN DEVELOPMENT",
+    "games.megacorp.title": "MEGACORP 2100",
+    "games.megacorp.subtitle": "Sci-Fi Economic Simulation",
+    "games.megacorp.desc": "Build from the boardroom down — supply chains, markets, and the quiet art of owning everything. Deep economic strategy set a decade further into the NOVA timeline.",
+    "games.megacorp.meta.engine": "Engine: Godot 4",
+    "games.megacorp.meta.status": "Status: In development",
+    "games.megacorp.meta.platforms": "Platforms: Linux · macOS (native)",
+    "games.cta": "Visit the studio — bitogames.com →",
 
-    "dev.badge": "IN DEVELOPMENT",
-    "dev.main.label": "[MAIN PROJECT]",
-    "dev.main.title": "Project Nova (working title) — cyberpunk city builder",
-    "dev.main.engine": "Engine: Godot 4",
-    "dev.main.status": "Status: Prototype phase",
-    "dev.main.platforms": "Platforms: Linux, macOS, iOS, iPadOS, Android",
-    "dev.side.label": "[ACTIVE SIDE PROJECTS]",
-    "dev.side.intro": "Smaller-scale, standalone applications and experimental games. These projects will be published on isolated subpages.",
-    "dev.side.swiftui": "SwiftUI: Native applications and games for the Apple ecosystem (macOS, iOS, iPadOS).",
-    "dev.side.python": "Python: Developer tools, data analysis scripts, and desktop utilities.",
+    "toolkit.title": "// THE TOOLKIT",
+    "toolkit.intro": "Small, native tools — made one at a time, mostly for myself.",
+    "toolkit.p.html": "Beyond the games, I build native apps and quiet little utilities. Nothing here is a product pitch — these are the things a curious person makes when good tools are finally within reach. <strong>AI-native, human-led:</strong> I design the systems by hand and let the machine keep up.",
+    "toolkit.swiftui.title": "SwiftUI Apps",
+    "toolkit.swiftui.desc": "Native applications and small games for the Apple ecosystem — macOS, iOS, and iPadOS — built the way Apple platforms deserve.",
+    "toolkit.swiftui.tag": "Swift · SwiftUI · Apple platforms",
+    "toolkit.kozlony.title": "Magyar Közlöny Analyzer",
+    "toolkit.kozlony.desc": "A Python tool that reads the Hungarian Official Gazette every day, extracts what matters, and summarizes it — automated on a Linux timer, with an AI assist for the analysis.",
+    "toolkit.kozlony.tag": "Python · systemd · AI",
+    "toolkit.mindprint.title": "MindPrint Journal",
+    "toolkit.mindprint.desc": "A minimalist journaling app for daily self-tracking — structured entries that turn scattered days into data I can actually reflect on over time.",
+    "toolkit.mindprint.tag": "Python · personal data",
 
-    "exp.title": "// INTERNAL SYSTEMS & AUTOMATION",
-    "exp.intro": "Workflow-supporting systems and data analysis tools developed for personal use. Focus: Python, desktop Linux environments, and automation. In the age of AI, structural, systems-level, critical, and creative thinking are essential.",
-    "exp.kozlony.title": "Official Gazette Analyzer",
-    "exp.kozlony.p": "Daily data extraction and content analysis from the Hungarian Official Gazette. Automated execution via systemd timer, utilizing the existing Claude environment.",
-    "exp.kozlony.tag": "Tech: Python · systemd · Claude",
-    "exp.naplo.title": "Life Journal Data Logger",
-    "exp.naplo.p": "Minimalist graphical interface for daily data collection. Structured logging system for long-term personal data analysis.",
-    "exp.naplo.tag": "Tech: Python · Tkinter",
-    "exp.bridge.title": "Distributed AI Bridge",
-    "exp.bridge.p": "Asynchronous data exchange between the Linux workstation and the macOS client. The models process information via a locally synchronized file system.",
-    "exp.bridge.tag": "Tech: Syncthing · Claude · Local network",
-
-    "contact.title": "// CONTACT",
+    "contact.title": "// SAY HELLO",
+    "contact.intro": "Building something, shooting on the Riviera, or just curious about the work? I read every message.",
     "contact.email.label": "EMAIL",
     "contact.github.label": "GITHUB",
     "contact.linkedin.label": "LINKEDIN",
-    "contact.studio.label": "STUDIO",
+    "contact.studio.label": "THE STUDIO",
 
-    "footer.copy": "© 2026 Sándor Bitó · Côte d'Azur · Made on Linux",
+    "footer.tagline": "Sándor Bitó · Between Linux and the sea",
+    "footer.copy": "© 2026 Sándor Bitó · Côte d'Azur · Made on Linux"
   },
 
   hu: {
-    "page.title": "Bitó Sándor — Alkotó a Riviérán",
-    "page.desc": "Fotózás, indie játékok, és kíváncsi kísérletek a Francia Riviéráról. A BITO GAMES alapítója — magyar srác Linux és a tenger között.",
+    "page.title": "Bitó Sándor — A Linux és a tenger között",
+    "page.desc": "Bitó Sándor személyes oldala: egykori balettművész, ma AI-natív indie fejlesztő és fotós a Côte d'Azur partján. Fotográfia, a BITO Games NOVA Universe játékai, és eszközök, egyenként megépítve.",
 
     "nav.about": "Rólam",
-    "nav.photo": "Fotók",
+    "nav.photo": "Fotográfia",
     "nav.games": "Játékok",
-    "nav.projects": "Projektek",
+    "nav.toolkit": "Eszköztár",
     "nav.contact": "Kapcsolat",
 
-    "hero.title": "ALKOTÓ",
-    "hero.subtitle": "a Francia Riviérán",
-    "hero.tagline.html": "Magyar vagyok. Linux és a tenger között élek. Fotózás, indie játékok és technológiai kísérletek.",
-    "hero.tag.loc": "📍 Nizza, Franciaország",
-    "hero.tag.photo": "📷 Fotó",
-    "hero.status": "ÁLLAPOT: MINDIG ÉPÍTEK VALAMIT",
+    "hero.eyebrow": "Côte d'Azur · Nizza, Franciaország",
+    "hero.title": "Bitó Sándor",
+    "hero.subtitle": "A Linux és a tenger között.",
+    "hero.tagline.html": "Magyar alkotó vagyok a francia Riviérán. Az első életemet <strong>balettművészként</strong> éltem; ezt szoftverépítéssel és fotózással töltöm. Ugyanaz a fegyelem, csak más színpad.",
+    "hero.tag.loc": "Nizza, Franciaország",
+    "hero.tag.studio": "BITO Games",
+    "hero.tag.photo": "Fotográfia",
+    "hero.tag.linux": "Linux",
+    "hero.tag.apple": "Apple · SwiftUI",
+    "hero.status": "STÁTUSZ: MINDIG ÉPÍTEK VALAMIT",
+    "hero.cta": "Olvasd el a történetet ↓",
 
-    "about.title": "// RÓLAM",
-    "about.p1.html": "Sándor vagyok. Magyarországról indultam, jelenleg a Francia Riviérán élek. A munkám és a hobbim a folyamatos kísérletezés: régebbi digitális gépekkel fotózom, játékokat fejlesztek Linux környezetben, emellett Apple platformokra (macOS, iOS, iPadOS) készítek applikációkat és játékokat SwiftUI-ban. Kiemelten érdekel a mesterséges intelligencia és a digitális oktatás kapcsolata.",
-    "about.p2.html": "A BITO GAMES a saját független játékstúdióm. Az oldalon látható fotók a Riviérán készültek. Az Apple-ökoszisztémára fókuszáló fejlesztéseim külön oldalon kapnak majd helyet.",
-    "about.philosophy": "Azért alkotok, mert a technológia és a kreativitás metszéspontja nyújtja a világ legmélyebb megértését.",
+    "about.title": "// A TÖRTÉNET",
+    "about.intro": "Két pálya, egy megszállottság: a fegyelmet olyasmivé formálni, ami könnyednek tűnik.",
+    "about.p1.html": "<strong>Sándor</strong> vagyok, <strong>Magyarországon</strong> születtem, ma a <strong>Côte d'Azur</strong> partján élek. Éveken át <strong>balettművész</strong> voltam — ez a mesterség könyörtelen ismétlésre épül, ahol a cél az, hogy a lehetetlen súlytalannak látsszon. Ez a fegyelem sosem hagyott el; csak új színpadokat talált magának.",
+    "about.p2.html": "Ma <strong>AI-natív indie fejlesztő</strong> és <strong>fotós</strong> vagyok. Játékokat és alkalmazásokat építek <strong>Linuxra</strong> és <strong>Apple platformokra</strong> SwiftUI-jal, kis <strong>Python</strong> eszközöket írok a saját munkámhoz, és régebbi digitális gépekkel fotózom a Riviérát. Az AI-nak hála egy ember akkora léptékben építhet, amihez régen egy egész stúdió kellett — de az ízlés, a struktúra és a vízió ember marad.",
+    "about.p3.html": "Nem a tömeget kergetem, sem a hype-ot. Inkább néhány őszinte dolgot készítek gonddal, és natívan szállítom őket — közel a vashoz, közel az igazsághoz.",
+    "about.philosophy": "Azért alkotok, mert a technológia és a kreativitás metszéspontján válik számomra a világ a legtisztábbá.",
+    "about.tag.ballet": "Egykori balettművész",
+    "about.tag.builder": "AI-natív alkotó",
+    "about.tag.photographer": "Fotós",
+    "about.tag.place": "Riviérán él",
 
-    "photo.title": "// FOTÓK",
-    "photo.text": "Fotók: Régebbi generációs digitális gépekkel készültek.",
+    "photo.title": "// FOTOGRÁFIA",
+    "photo.intro": "A Riviéra, régebbi digitális gépeken — fény, víz és a csendes órák.",
+    "photo.text": "Nizza és a Côte d'Azur környékén készült. Koppints bármelyik képre a galéria megnyitásához.",
+    "photo.lightbox.close": "Bezárás",
+    "photo.lightbox.prev": "Előző",
+    "photo.lightbox.next": "Következő",
 
-    "games.title": "// JÁTÉKOK",
-    "games.h3": "Független szoftver- és játékfejlesztő stúdió.",
-    "games.focus": "Célpontok: Natív alkalmazások és játékok tervezése asztali (Linux, macOS) és mobil (iOS, iPadOS, Android) platformokra.",
-    "games.p": "Jelenlegi projekt: Project Nova (munkacím) — cyberpunk városépítő stratégia. Fejlesztés alatt natív Linux és macOS rendszerekre.",
-    "games.cta": "Tovább a bitogames.com-ra →",
+    "games.title": "// A NOVA UNIVERSE",
+    "games.intro": "Az indie stúdióm, a BITO Games, egyetlen közös közeljövő-világot épít két játékon át.",
+    "games.universe.lead.html": "A <strong>NOVA Universe</strong> az a folytonosság, ami összeköti a játékaimat — egy évszázad, kétféleképpen játszva. Mindkettő fejlesztés alatt áll, mindkettő natívan készül Linuxra és macOS-re. A teljes stúdió a <strong>bitogames.com</strong> oldalon él.",
+    "games.cybercity.badge": "FEJLESZTÉS ALATT",
+    "games.cybercity.title": "CYBER CITY 2089",
+    "games.cybercity.subtitle": "Cyberpunk városépítő",
+    "games.cybercity.desc": "Irányíts egy neonvárost az utca szintjéről felfelé — kerületek, lakók, infrastruktúra, és a jóléti csúszka, ami csendben eldönti, kié lesz a jövő. Városépítő lelkiismerettel.",
+    "games.cybercity.meta.engine": "Motor: Godot 4",
+    "games.cybercity.meta.status": "Státusz: Fejlesztés alatt",
+    "games.cybercity.meta.platforms": "Platformok: Linux · macOS (natív)",
+    "games.megacorp.badge": "FEJLESZTÉS ALATT",
+    "games.megacorp.title": "MEGACORP 2100",
+    "games.megacorp.subtitle": "Sci-fi gazdasági szimuláció",
+    "games.megacorp.desc": "Építkezz a tárgyalóteremtől lefelé — ellátási láncok, piacok, és a csendes művészet, ahogy minden a tiéd lesz. Mély gazdasági stratégia, egy évtizeddel mélyebben a NOVA idővonalán.",
+    "games.megacorp.meta.engine": "Motor: Godot 4",
+    "games.megacorp.meta.status": "Státusz: Fejlesztés alatt",
+    "games.megacorp.meta.platforms": "Platformok: Linux · macOS (natív)",
+    "games.cta": "Látogass el a stúdióba — bitogames.com →",
 
-    "dev.badge": "FEJLESZTÉS ALATT",
-    "dev.main.label": "[FŐ PROJEKT]",
-    "dev.main.title": "Project Nova (munkacím) — cyberpunk városépítő stratégia",
-    "dev.main.engine": "Motor: Godot 4",
-    "dev.main.status": "Állapot: Prototípus fázis",
-    "dev.main.platforms": "Platformok: Linux, macOS, iOS, iPadOS, Android",
-    "dev.side.label": "[AKTÍV MELLÉKPROJEKTEK]",
-    "dev.side.intro": "Kisebb léptékű, önálló alkalmazások és kísérleti játékok. Ezek a projektek izolált aloldalakon kerülnek publikálásra.",
-    "dev.side.swiftui": "SwiftUI: Natív alkalmazások és játékok az Apple ökoszisztémára (macOS, iOS, iPadOS).",
-    "dev.side.python": "Python: Fejlesztői eszközök, adatelemző szkriptek és asztali segédprogramok.",
+    "toolkit.title": "// AZ ESZKÖZTÁR",
+    "toolkit.intro": "Kicsi, natív eszközök — egyenként készülnek, leginkább magamnak.",
+    "toolkit.p.html": "A játékokon túl natív alkalmazásokat és csendes kis segédeszközöket építek. Semmi itt nem termékajánlat — ezek azok a dolgok, amiket egy kíváncsi ember készít, amikor a jó eszközök végre karnyújtásnyira kerülnek. <strong>AI-natív, ember által vezetve:</strong> a rendszereket kézzel tervezem, a gépet pedig hagyom, hogy lépést tartson.",
+    "toolkit.swiftui.title": "SwiftUI alkalmazások",
+    "toolkit.swiftui.desc": "Natív alkalmazások és kis játékok az Apple ökoszisztémához — macOS, iOS és iPadOS —, úgy megépítve, ahogy az Apple platformok megérdemlik.",
+    "toolkit.swiftui.tag": "Swift · SwiftUI · Apple platformok",
+    "toolkit.kozlony.title": "Magyar Közlöny Analyzer",
+    "toolkit.kozlony.desc": "Python eszköz, ami minden nap elolvassa a Magyar Közlönyt, kiszűri a lényeget és összefoglalja — Linux időzítőn automatizálva, az elemzéshez AI-segítséggel.",
+    "toolkit.kozlony.tag": "Python · systemd · AI",
+    "toolkit.mindprint.title": "MindPrint Journal",
+    "toolkit.mindprint.desc": "Minimalista naplózó alkalmazás napi önkövetéshez — strukturált bejegyzések, amik a szétszórt napokat olyan adattá alakítják, amin idővel tényleg el tudok gondolkodni.",
+    "toolkit.mindprint.tag": "Python · személyes adatok",
 
-    "exp.title": "// BELSŐ RENDSZEREK ÉS AUTOMATIZÁCIÓ",
-    "exp.intro": "Saját használatra fejlesztett, munkafolyamatokat támogató rendszerek és adatelemző eszközök. Fókusz: Python, asztali Linux környezet és automatizáció. Az AI korában a strukturális, rendszerszintű, kritikus és kreatív gondolkodás elengedhetetlen.",
-    "exp.kozlony.title": "Magyar Közlöny Elemző",
-    "exp.kozlony.p": "Napi adatkinyerés és tartalomelemzés a Magyar Közlönyből. Automatizált futtatás systemd időzítővel, a meglévő Claude környezet bevonásával.",
-    "exp.kozlony.tag": "Technológia: Python · systemd · Claude",
-    "exp.naplo.title": "Életnapló Adatgyűjtő",
-    "exp.naplo.p": "Minimalista grafikus interfész napi adatgyűjtéshez. Strukturált naplózási rendszer a hosszútávú személyes adatelemzéshez.",
-    "exp.naplo.tag": "Technológia: Python · Tkinter",
-    "exp.bridge.title": "Elosztott AI Híd",
-    "exp.bridge.p": "Aszinkron adatcsere a Linux munkaállomás és a macOS kliens között. A modellek egy lokálisan szinkronizált fájlrendszeren keresztül dolgozzák fel az információkat.",
-    "exp.bridge.tag": "Technológia: Syncthing · Claude · Lokális hálózat",
-
-    "contact.title": "// KAPCSOLAT",
-    "contact.email.label": "E-MAIL",
+    "contact.title": "// KÖSZÖNJ BE",
+    "contact.intro": "Építesz valamit, fotózol a Riviérán, vagy csak kíváncsi vagy a munkára? Minden üzenetet elolvasok.",
+    "contact.email.label": "EMAIL",
     "contact.github.label": "GITHUB",
     "contact.linkedin.label": "LINKEDIN",
-    "contact.studio.label": "STÚDIÓ",
+    "contact.studio.label": "A STÚDIÓ",
 
-    "footer.copy": "© 2026 Bitó Sándor · Francia Riviéra · Linuxon készült",
+    "footer.tagline": "Bitó Sándor · A Linux és a tenger között",
+    "footer.copy": "© 2026 Bitó Sándor · Côte d'Azur · Linuxon készült"
   },
+
+  zh: {
+    "page.title": "Sándor Bitó — 在 Linux 与大海之间",
+    "page.desc": "Sándor Bitó 的个人网站：一位从芭蕾舞者转型的 AI 原生独立开发者兼摄影师，现居蔚蓝海岸。这里有摄影作品、来自 BITO Games 的 NOVA Universe 系列游戏，以及那些一件一件打磨出来的工具。",
+
+    "nav.about": "关于",
+    "nav.photo": "摄影",
+    "nav.games": "游戏",
+    "nav.toolkit": "工具箱",
+    "nav.contact": "联系",
+
+    "hero.eyebrow": "蔚蓝海岸 · 法国尼斯",
+    "hero.title": "Sándor Bitó",
+    "hero.subtitle": "在 Linux 与大海之间。",
+    "hero.tagline.html": "我是一名旅居法国里维埃拉的匈牙利创作者。上半生，我是一名<strong>芭蕾舞者</strong>；这一生，我用来打造软件、拍摄照片。同样的自律，只是换了舞台。",
+    "hero.tag.loc": "法国尼斯",
+    "hero.tag.studio": "BITO Games",
+    "hero.tag.photo": "摄影",
+    "hero.tag.linux": "Linux",
+    "hero.tag.apple": "Apple · SwiftUI",
+    "hero.status": "状态：永远在打造点什么",
+    "hero.cta": "读读这段故事 ↓",
+
+    "about.title": "// 故事",
+    "about.intro": "两段人生，一种执念：把自律，化作看似毫不费力的东西。",
+    "about.p1.html": "我是 <strong>Sándor</strong>，生于<strong>匈牙利</strong>，如今定居<strong>蔚蓝海岸</strong>。曾有很多年，我是一名<strong>芭蕾舞者</strong>——这门手艺建立在无止境的重复之上，目标是让不可能看起来轻盈无重。那段训练从未离开过我，它只是找到了新的舞台。",
+    "about.p2.html": "如今，我是一名 <strong>AI 原生独立开发者</strong>，也是一名<strong>摄影师</strong>。我在 <strong>Linux</strong> 上、以及用 SwiftUI 为 <strong>Apple 平台</strong>打造游戏与应用，写些小巧的 <strong>Python</strong> 工具来服务自己的创作，并用老款数码相机记录里维埃拉。AI 让一个人也能达到过去整间工作室才能完成的规模——但品味、结构与愿景，始终属于人。",
+    "about.p3.html": "我不追逐人潮，也不追逐风口。我宁愿用心做几样真诚的东西，并以原生的方式交付出来——贴近底层，也贴近本真。",
+    "about.philosophy": "我之所以创作，是因为在技术与创意的交汇处，这个世界对我而言变得最为清晰。",
+    "about.tag.ballet": "前芭蕾舞者",
+    "about.tag.builder": "AI 原生创造者",
+    "about.tag.photographer": "摄影师",
+    "about.tag.place": "旅居里维埃拉",
+
+    "photo.title": "// 摄影",
+    "photo.intro": "用老款数码相机记录的里维埃拉——光、水，与静谧的时光。",
+    "photo.text": "摄于尼斯及蔚蓝海岸一带。轻点任意画面即可打开图库。",
+    "photo.lightbox.close": "关闭",
+    "photo.lightbox.prev": "上一张",
+    "photo.lightbox.next": "下一张",
+
+    "games.title": "// NOVA UNIVERSE",
+    "games.intro": "我的独立工作室 BITO Games，正用两款游戏，构建同一个近未来世界。",
+    "games.universe.lead.html": "<strong>NOVA Universe</strong> 是串联起我所有游戏的连续脉络——同一个世纪，两种玩法。两款游戏都在开发中，都为 Linux 与 macOS 原生打造。完整的工作室内容请见 <strong>bitogames.com</strong>。",
+    "games.cybercity.badge": "开发中",
+    "games.cybercity.title": "CYBER CITY 2089",
+    "games.cybercity.subtitle": "赛博朋克城市建造",
+    "games.cybercity.desc": "从街道开始，治理一座霓虹之城——街区、市民、基础设施，以及那道悄然决定未来属于谁的福利滑块。一款有良知的城市建造游戏。",
+    "games.cybercity.meta.engine": "引擎：Godot 4",
+    "games.cybercity.meta.status": "状态：开发中",
+    "games.cybercity.meta.platforms": "平台：Linux · macOS（原生）",
+    "games.megacorp.badge": "开发中",
+    "games.megacorp.title": "MEGACORP 2100",
+    "games.megacorp.subtitle": "科幻经济模拟",
+    "games.megacorp.desc": "从董事会出发，自上而下地建立一切——供应链、市场，以及悄悄掌控一切的那门艺术。一场深度经济策略，设定在 NOVA 时间线更往后十年。",
+    "games.megacorp.meta.engine": "引擎：Godot 4",
+    "games.megacorp.meta.status": "状态：开发中",
+    "games.megacorp.meta.platforms": "平台：Linux · macOS（原生）",
+    "games.cta": "探访工作室 — bitogames.com →",
+
+    "toolkit.title": "// 工具箱",
+    "toolkit.intro": "小巧的原生工具——一件一件做出来，大多是为自己。",
+    "toolkit.p.html": "除了游戏，我还打造原生应用和一些安静的小工具。这里没有任何产品推销——它们只是一个好奇的人，在终于用得上趁手工具时随手做出的东西。<strong>AI 原生，由人主导：</strong>系统由我亲手设计，再让机器跟上节奏。",
+    "toolkit.swiftui.title": "SwiftUI 应用",
+    "toolkit.swiftui.desc": "为 Apple 生态——macOS、iOS 与 iPadOS——打造的原生应用与小游戏，以这些平台应得的方式精心构建。",
+    "toolkit.swiftui.tag": "Swift · SwiftUI · Apple 平台",
+    "toolkit.kozlony.title": "匈牙利公报分析器",
+    "toolkit.kozlony.desc": "一款 Python 工具，每天读取《匈牙利官方公报》，提取要点并加以归纳——借助 Linux 定时器自动运行，并由 AI 辅助分析。",
+    "toolkit.kozlony.tag": "Python · systemd · AI",
+    "toolkit.mindprint.title": "MindPrint Journal",
+    "toolkit.mindprint.desc": "一款极简的日志应用，用于日常自我记录——结构化的条目，把零散的日子变成我真正可以回望与反思的数据。",
+    "toolkit.mindprint.tag": "Python · 个人数据",
+
+    "contact.title": "// 打个招呼",
+    "contact.intro": "在做点什么、在里维埃拉拍照，或只是对这些作品感到好奇？每一条留言我都会读。",
+    "contact.email.label": "邮箱",
+    "contact.github.label": "GITHUB",
+    "contact.linkedin.label": "LINKEDIN",
+    "contact.studio.label": "工作室",
+
+    "footer.tagline": "Sándor Bitó · 在 Linux 与大海之间",
+    "footer.copy": "© 2026 Sándor Bitó · 蔚蓝海岸 · 在 Linux 上制作"
+  }
 };
-
-(function () {
-  const STORAGE_KEY = "sandorbito-lang";
-  const DEFAULT_LANG = "en";
-
-  function apply(lang) {
-    const dict = TRANSLATIONS[lang] || TRANSLATIONS[DEFAULT_LANG];
-
-    document.documentElement.lang = lang;
-
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      if (dict[key] != null) el.textContent = dict[key];
-    });
-
-    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-      const key = el.getAttribute("data-i18n-html");
-      if (dict[key] != null) el.innerHTML = dict[key];
-    });
-
-    document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
-      // Format: "title:page.title,placeholder:hero.title"
-      const pairs = el.getAttribute("data-i18n-attr").split(",");
-      pairs.forEach((pair) => {
-        const [attr, key] = pair.split(":").map((s) => s.trim());
-        if (attr && key && dict[key] != null) el.setAttribute(attr, dict[key]);
-      });
-    });
-
-    // Update <title> separately
-    if (dict["page.title"]) document.title = dict["page.title"];
-
-    // Buttons active state
-    document.querySelectorAll(".lang-btn").forEach((b) => {
-      b.classList.toggle("is-active", b.getAttribute("data-lang") === lang);
-    });
-
-    // Notify dynamic parts (e.g. photo count badge) so they can re-render.
-    document.dispatchEvent(new CustomEvent("sb:langchange", { detail: { lang } }));
-  }
-
-  function bind() {
-    document.querySelectorAll(".lang-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const lang = btn.getAttribute("data-lang");
-        try {
-          localStorage.setItem(STORAGE_KEY, lang);
-        } catch (e) { /* private mode */ }
-        apply(lang);
-      });
-    });
-  }
-
-  function init() {
-    let lang = DEFAULT_LANG;
-    try {
-      lang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
-    } catch (e) { /* private mode */ }
-    bind();
-    apply(lang);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-})();
