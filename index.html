@@ -4,15 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="dark" />
-<meta name="theme-color" content="#0A0616" />
+<meta name="theme-color" content="#07080c" />
 
 <title data-i18n="page.title">BITO GAMES — Két univerzum</title>
-<meta name="description" data-i18n-attr="content:page.desc" content="Két univerzum, egy független indie stúdió: NOVA szimulációk és retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra." />
+<meta name="description" data-i18n-attr="content:page.desc" content="Két univerzum, egy független indie stúdió: NOVA szimulációk és pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra." />
 <link rel="canonical" href="https://sandorbito.com/" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="BITO GAMES — Két univerzum" />
-<meta property="og:description" content="NOVA szimulációk és retró pixel-világok." />
+<meta property="og:description" content="NOVA szimulációk és pixel-világok." />
 <meta property="og:url" content="https://sandorbito.com/" />
 <meta property="og:image" content="https://sandorbito.com/assets/branding/BITO_GAMES_logo_v1_alpha.png" />
 
@@ -24,14 +24,17 @@
 <style>
   *,*::before,*::after{ box-sizing:border-box; }
   :root{
-    --bg:#0A0616; --bg2:#170D2E; --panel:rgba(30,16,60,.55);
-    --violet:#b26bff; --violet-dim:rgba(178,107,255,.30); --glow:rgba(178,107,255,.45);
-    --text:#EDE7FA; --muted:#a698c4;
+    --bg:#07080c; --bg-raise:#0c0e15; --panel:#0f111a;
+    --sun:#e8b06a; --sun-2:#f0a868; --sun-line:rgba(232,176,106,.42); --glow:rgba(232,176,106,.30);
+    --nova:#8b6cff; --nova-line:rgba(139,108,255,.40); --corp:#ffc14d; --cyber:#2ff3ff;
+    --text:#eef1f7; --muted:#aab2c5; --dim:#6f7790;
     --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
   }
   html,body{ margin:0; padding:0; }
+  #matrix-canvas{ position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block; opacity:.55; pointer-events:none; }
+  body>header,body>main,body>footer{ position:relative; z-index:1; }
   body{
-    background:radial-gradient(120% 90% at 50% 0,var(--bg2) 0%,var(--bg) 60%) fixed,var(--bg);
+    background:var(--bg);
     color:var(--text); font-family:var(--mono); line-height:1.6;
     min-height:100dvh; display:flex; flex-direction:column;
     -webkit-font-smoothing:antialiased;
@@ -47,11 +50,11 @@
     transition:color .2s,background .2s;
   }
   .lang button:hover{ color:var(--text); }
-  .lang button.on{ color:var(--violet); background:rgba(178,107,255,.10); }
-  .lang span{ color:#4a3e63; }
+  .lang button.on{ color:var(--sun); background:rgba(232,176,106,.12); }
+  .lang span{ color:#3a3426; }
 
   .hero{ text-align:center; padding:2.5rem 0 1rem; }
-  .eyebrow{ font-size:.78rem; letter-spacing:.34em; color:var(--violet); text-transform:uppercase; margin:0 0 1rem; }
+  .eyebrow{ font-size:.78rem; letter-spacing:.34em; color:var(--sun); text-transform:uppercase; margin:0 0 1rem; }
   h1{
     margin:0 0 .9rem; font-size:clamp(1.9rem,7vw,3.6rem); line-height:1.1;
     letter-spacing:.04em; font-weight:700; text-shadow:0 0 26px var(--glow);
@@ -62,29 +65,34 @@
   @media(min-width:820px){ .universes{ grid-template-columns:1fr 1fr; } }
   .u{
     display:block; text-decoration:none; background:var(--panel);
-    border:1px solid var(--violet-dim); border-radius:16px;
+    border:1px solid var(--sun-line); border-radius:16px;
     padding:clamp(.9rem,2.5vw,1.3rem); text-align:center;
     transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
   }
-  .u:hover,.u:focus-visible{ transform:translateY(-6px); border-color:var(--violet); box-shadow:0 14px 40px -12px var(--glow); }
-  .u:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; }
+  .u:hover,.u:focus-visible{ transform:translateY(-6px); box-shadow:0 14px 40px -12px var(--glow); }
+  .u--nova:hover,.u--nova:focus-visible{ border-color:var(--nova); box-shadow:0 14px 40px -12px rgba(139,108,255,.34); }
+  .u--pixel:hover,.u--pixel:focus-visible{ border-color:var(--corp); box-shadow:0 14px 40px -12px rgba(255,193,77,.30); }
+  .u--nova .go{ color:var(--nova); } .u--pixel .go{ color:var(--corp); }
+  .u:focus-visible{ outline:2px solid var(--sun); outline-offset:3px; }
   .u img{ display:block; width:100%; height:auto; border-radius:10px; }
   .u .tag{ display:block; margin-top:.9rem; color:var(--muted); font-size:.92rem; }
-  .u .go{ display:inline-block; margin-top:.6rem; color:var(--violet); letter-spacing:.16em; font-size:.85rem; transition:transform .25s ease; }
+  .u .go{ display:inline-block; margin-top:.6rem; color:var(--sun); letter-spacing:.16em; font-size:.85rem; transition:transform .25s ease; }
   .u:hover .go{ transform:translateX(5px); }
 
   footer{ margin-top:auto; padding:3rem 0 2.5rem; text-align:center; }
   .studio{ display:inline-block; text-decoration:none; padding:.6rem; transition:transform .25s ease,filter .25s ease; }
   .studio:hover,.studio:focus-visible{ transform:translateY(-3px); filter:drop-shadow(0 0 22px var(--glow)); }
-  .studio:focus-visible{ outline:2px solid var(--violet); outline-offset:4px; border-radius:12px; }
+  .studio:focus-visible{ outline:2px solid var(--sun); outline-offset:4px; border-radius:12px; }
   .studio img{ display:block; width:min(230px,62vw); height:auto; margin:0 auto; }
-  .visit{ margin:.9rem 0 0; color:var(--violet); font-size:.9rem; letter-spacing:.14em; }
-  .copy{ margin:1.4rem 0 0; color:#6d5f8c; font-size:.8rem; letter-spacing:.06em; }
+  .visit{ margin:.9rem 0 0; color:var(--sun); font-size:.9rem; letter-spacing:.14em; }
+  .copy{ margin:1.4rem 0 0; color:#6f7790; font-size:.8rem; letter-spacing:.06em; }
 
   @media(prefers-reduced-motion:reduce){ *{ transition:none !important; } }
 </style>
 </head>
 <body>
+
+<canvas id="matrix-canvas" aria-hidden="true"></canvas>
 
 <header>
   <div class="wrap">
@@ -100,18 +108,18 @@
   <section class="hero">
     <p class="eyebrow" data-i18n="hero.eyebrow">Független indie stúdió</p>
     <h1 data-i18n="hero.title">KÉT UNIVERZUM</h1>
-    <p class="lede" data-i18n="hero.lede">Mély rendszerek és meleg, retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.</p>
+    <p class="lede" data-i18n="hero.lede">Mély rendszerek és kézzel rajzolt pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.</p>
   </section>
 
   <section class="universes" aria-label="Univerzumok">
-    <a class="u" href="https://bitogames.com/#nova">
+    <a class="u u--nova" href="https://bitogames.com/#nova">
       <img src="assets/branding/BITO_GAMES_NOVA_UNIVERSE_banner_v1_alpha.png" alt="NOVA Universe" loading="lazy" decoding="async" />
       <span class="tag" data-i18n="nova.tag">Prémium sci-fi szimulációk</span>
       <span class="go" data-i18n="cta">BELÉPÉS →</span>
     </a>
-    <a class="u" href="https://bitogames.com/#pixel">
+    <a class="u u--pixel" href="https://bitogames.com/#pixel">
       <img src="assets/branding/BITO_GAMES_PIXEL_ART_UNIVERSE_banner_v1_alpha.png" alt="Pixel Art Universe" loading="lazy" decoding="async" />
-      <span class="tag" data-i18n="pixel.tag">Meleg, retró pixel-világok</span>
+      <span class="tag" data-i18n="pixel.tag">Kézzel rajzolt pixel-világok</span>
       <span class="go" data-i18n="cta">BELÉPÉS →</span>
     </a>
   </section>
@@ -132,36 +140,36 @@
   var T = {
     hu:{
       "page.title":"BITO GAMES — Két univerzum",
-      "page.desc":"Két univerzum, egy független indie stúdió: NOVA szimulációk és retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
+      "page.desc":"Két univerzum, egy független indie stúdió: NOVA szimulációk és pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
       "hero.eyebrow":"Független indie stúdió",
       "hero.title":"KÉT UNIVERZUM",
-      "hero.lede":"Mély rendszerek és meleg, retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
+      "hero.lede":"Mély rendszerek és kézzel rajzolt pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
       "nova.tag":"Prémium sci-fi szimulációk",
-      "pixel.tag":"Meleg, retró pixel-világok",
+      "pixel.tag":"Kézzel rajzolt pixel-világok",
       "cta":"BELÉPÉS →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
     },
     en:{
       "page.title":"BITO GAMES — Two universes",
-      "page.desc":"Two universes, one independent indie studio: NOVA simulations and retro pixel worlds. Native games for Windows, macOS and Linux.",
+      "page.desc":"Two universes, one independent indie studio: NOVA simulations and pixel worlds. Native games for Windows, macOS and Linux.",
       "hero.eyebrow":"Independent indie studio",
       "hero.title":"TWO UNIVERSES",
-      "hero.lede":"Deep systems and warm retro pixel worlds. Native games for Windows, macOS and Linux.",
+      "hero.lede":"Deep systems and hand-made pixel worlds. Native games for Windows, macOS and Linux.",
       "nova.tag":"Premium sci-fi simulations",
-      "pixel.tag":"Warm retro pixel worlds",
+      "pixel.tag":"Hand-made pixel worlds",
       "cta":"ENTER →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
     },
     zh:{
       "page.title":"BITO GAMES — 两个宇宙",
-      "page.desc":"两个宇宙，一家独立工作室：NOVA 模拟与复古像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
+      "page.desc":"两个宇宙，一家独立工作室：NOVA 模拟与像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
       "hero.eyebrow":"独立游戏工作室",
       "hero.title":"两个宇宙",
-      "hero.lede":"深层系统与温暖的复古像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
+      "hero.lede":"深层系统与手工打造的像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
       "nova.tag":"高端科幻模拟",
-      "pixel.tag":"温暖的复古像素世界",
+      "pixel.tag":"手工打造的像素世界",
       "cta":"进入 →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
@@ -193,6 +201,50 @@
   try{ saved = localStorage.getItem('bito_lang'); }catch(e){}
   var auto = (navigator.language||'hu').slice(0,2).toLowerCase();
   apply(saved || (T[auto] ? auto : 'hu'));
+})();
+</script>
+
+<script>
+(function(){
+  var canvas = document.getElementById('matrix-canvas');
+  var ctx = canvas ? canvas.getContext('2d') : null;
+  if(!ctx) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789';
+  var arr = chars.split('');
+  var fontSize = 16, columns = 0, drops = [], raf = null, last = 0, interval = 70;
+  function resize(){
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
+    drops = new Array(columns).fill(1).map(function(){ return Math.random() * -100; });
+  }
+  function frame(now){
+    if(now - last > interval){
+      ctx.fillStyle = 'rgba(7,8,12,0.22)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.font = fontSize + "px ui-monospace, SFMono-Regular, monospace";
+      for(var i=0;i<drops.length;i++){
+        var text = arr[Math.floor(Math.random()*arr.length)];
+        var x = i*fontSize, y = drops[i]*fontSize, r = Math.random();
+        if(r > 0.975) ctx.fillStyle = '#2ff3ff';
+        else if(r > 0.93) ctx.fillStyle = '#8b6cff';
+        else ctx.fillStyle = '#e8b06a';
+        ctx.fillText(text, x, y);
+        if(y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      last = now;
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  resize();
+  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(resize,150); });
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden){ if(raf){ cancelAnimationFrame(raf); raf=null; } }
+    else if(!raf && !reduceMotion){ raf = requestAnimationFrame(frame); }
+  });
+  if(reduceMotion){ ctx.fillStyle='#07080c'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+  else raf = requestAnimationFrame(frame);
 })();
 </script>
 </body>
