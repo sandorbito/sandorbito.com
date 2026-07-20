@@ -1,308 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07080c">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0A0616" />
 
-  <title data-i18n="page.title">Sándor Bitó — Between Linux and the sea</title>
-  <meta name="description" data-i18n="page.desc" data-i18n-attr="content:page.desc" content="The personal site of Sándor Bitó: a former ballet dancer turned AI-native indie developer and photographer on the Côte d'Azur. Photography, the NOVA Universe games from BITO Games, and tools built one at a time.">
+<title data-i18n="page.title">BITO GAMES — Két univerzum</title>
+<meta name="description" data-i18n-attr="content:page.desc" content="Két univerzum, egy független indie stúdió: NOVA szimulációk és retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra." />
+<link rel="canonical" href="https://sandorbito.com/" />
 
-  <!-- Open Graph / social -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Sándor Bitó — Between Linux and the sea">
-  <meta property="og:description" content="A former ballet dancer turned AI-native indie developer and photographer on the Côte d'Azur.">
-  <meta property="og:locale" content="en">
-  <meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="BITO GAMES — Két univerzum" />
+<meta property="og:description" content="NOVA szimulációk és retró pixel-világok." />
+<meta property="og:url" content="https://sandorbito.com/" />
+<meta property="og:image" content="https://sandorbito.com/assets/branding/BITO_GAMES_logo_v1_alpha.png" />
 
-  <!-- Security headers (CSP-friendly self-hosted approach) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests;" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
 
-  <!-- Family type stack: Space Grotesk (display/body) + Chakra Petch (tech) + JetBrains Mono (data) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{ box-sizing:border-box; }
+  :root{
+    --bg:#0A0616; --bg2:#170D2E; --panel:rgba(30,16,60,.55);
+    --violet:#b26bff; --violet-dim:rgba(178,107,255,.30); --glow:rgba(178,107,255,.45);
+    --text:#EDE7FA; --muted:#a698c4;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:radial-gradient(120% 90% at 50% 0,var(--bg2) 0%,var(--bg) 60%) fixed,var(--bg);
+    color:var(--text); font-family:var(--mono); line-height:1.6;
+    min-height:100dvh; display:flex; flex-direction:column;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  .wrap{ width:min(1100px,92%); margin:0 auto; }
 
-  <link rel="stylesheet" href="style.css">
+  header{ padding:1.25rem 0 .5rem; }
+  .lang{ display:flex; gap:.5rem; align-items:center; justify-content:flex-end; }
+  .lang button{
+    font:inherit; font-size:.85rem; letter-spacing:.1em; color:var(--muted);
+    background:none; border:0; cursor:pointer; padding:.3rem .45rem; border-radius:6px;
+    transition:color .2s,background .2s;
+  }
+  .lang button:hover{ color:var(--text); }
+  .lang button.on{ color:var(--violet); background:rgba(178,107,255,.10); }
+  .lang span{ color:#4a3e63; }
+
+  .hero{ text-align:center; padding:2.5rem 0 1rem; }
+  .eyebrow{ font-size:.78rem; letter-spacing:.34em; color:var(--violet); text-transform:uppercase; margin:0 0 1rem; }
+  h1{
+    margin:0 0 .9rem; font-size:clamp(1.9rem,7vw,3.6rem); line-height:1.1;
+    letter-spacing:.04em; font-weight:700; text-shadow:0 0 26px var(--glow);
+  }
+  .lede{ margin:0 auto; max-width:52ch; color:var(--muted); font-size:clamp(.95rem,2.4vw,1.08rem); }
+
+  .universes{ display:grid; gap:clamp(1.1rem,3vw,1.9rem); padding:2.5rem 0 1rem; grid-template-columns:1fr; }
+  @media(min-width:820px){ .universes{ grid-template-columns:1fr 1fr; } }
+  .u{
+    display:block; text-decoration:none; background:var(--panel);
+    border:1px solid var(--violet-dim); border-radius:16px;
+    padding:clamp(.9rem,2.5vw,1.3rem); text-align:center;
+    transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+  }
+  .u:hover,.u:focus-visible{ transform:translateY(-6px); border-color:var(--violet); box-shadow:0 14px 40px -12px var(--glow); }
+  .u:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; }
+  .u img{ display:block; width:100%; height:auto; border-radius:10px; }
+  .u .tag{ display:block; margin-top:.9rem; color:var(--muted); font-size:.92rem; }
+  .u .go{ display:inline-block; margin-top:.6rem; color:var(--violet); letter-spacing:.16em; font-size:.85rem; transition:transform .25s ease; }
+  .u:hover .go{ transform:translateX(5px); }
+
+  footer{ margin-top:auto; padding:3rem 0 2.5rem; text-align:center; }
+  .studio{ display:inline-block; text-decoration:none; padding:.6rem; transition:transform .25s ease,filter .25s ease; }
+  .studio:hover,.studio:focus-visible{ transform:translateY(-3px); filter:drop-shadow(0 0 22px var(--glow)); }
+  .studio:focus-visible{ outline:2px solid var(--violet); outline-offset:4px; border-radius:12px; }
+  .studio img{ display:block; width:min(230px,62vw); height:auto; margin:0 auto; }
+  .visit{ margin:.9rem 0 0; color:var(--violet); font-size:.9rem; letter-spacing:.14em; }
+  .copy{ margin:1.4rem 0 0; color:#6d5f8c; font-size:.8rem; letter-spacing:.06em; }
+
+  @media(prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
 </head>
 <body>
-  <!-- Ambient layers: low-opacity matrix, faint scanlines, radial vignette -->
-  <canvas id="matrix-canvas" aria-hidden="true"></canvas>
-  <div class="scanlines" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
 
-  <a class="skip-link" href="#about">Skip to content</a>
-
-  <!-- ============================ NAV ============================ -->
-  <header class="nav" id="nav">
-    <div class="nav__inner">
-      <a class="nav__brand" href="#top" aria-label="Sándor Bitó — home">
-        <span class="nav__brand-bracket">[</span><span class="nav__brand-name">SÁNDOR</span><span class="nav__brand-sub">BITÓ</span><span class="nav__brand-bracket">]</span>
-      </a>
-
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#about" data-i18n="nav.about">About</a>
-        <a href="#photo" data-i18n="nav.photo">Photography</a>
-        <a href="#games" data-i18n="nav.games">Games</a>
-        <a href="#toolkit" data-i18n="nav.toolkit">Toolkit</a>
-        <a href="#contact" class="nav__cta" data-i18n="nav.contact">Contact</a>
-
-        <div class="lang-switch" role="group" aria-label="Language">
-          <button type="button" class="lang-switch__btn" data-lang="en" lang="en" aria-pressed="true">EN</button>
-          <button type="button" class="lang-switch__btn" data-lang="hu" lang="hu" aria-pressed="false">HU</button>
-          <button type="button" class="lang-switch__btn" data-lang="zh" lang="zh" aria-pressed="false">中文</button>
-        </div>
-      </nav>
-
-      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <main id="top">
-
-    <!-- ============================ HERO ============================ -->
-    <section class="hero" id="hero">
-      <div class="hero__frame" aria-hidden="true">
-        <span class="bracket bracket--tl"></span>
-        <span class="bracket bracket--tr"></span>
-        <span class="bracket bracket--bl"></span>
-        <span class="bracket bracket--br"></span>
-      </div>
-
-      <div class="hero__inner">
-        <p class="hero__eyebrow reveal" data-i18n="hero.eyebrow">Côte d'Azur · Nice, France</p>
-
-        <h1 class="hero__title reveal" data-i18n="hero.title">Sándor Bitó</h1>
-
-        <p class="hero__subtitle reveal" data-i18n="hero.subtitle">Between Linux and the sea.</p>
-
-        <p class="hero__tagline reveal" data-i18n="hero.tagline.html">I'm a Hungarian creator on the French Riviera. I spent my first life as a <strong>ballet dancer</strong>; I spend this one building software and making photographs. Same discipline, different stage.</p>
-
-        <ul class="hero__tags reveal" aria-label="At a glance">
-          <li class="hero__tag" data-i18n="hero.tag.loc">Nice, France</li>
-          <li class="hero__tag" data-i18n="hero.tag.studio">BITO Games</li>
-          <li class="hero__tag" data-i18n="hero.tag.photo">Photography</li>
-          <li class="hero__tag" data-i18n="hero.tag.linux">Linux</li>
-          <li class="hero__tag" data-i18n="hero.tag.apple">Apple · SwiftUI</li>
-        </ul>
-
-        <div class="hero__status reveal" role="status">
-          <span class="hero__status-dot" aria-hidden="true"></span>
-          <span class="hero__status-text" id="hero-status" data-i18n="hero.status" data-typewriter>STATUS: ALWAYS BUILDING SOMETHING</span>
-        </div>
-
-        <a href="#about" class="hero__cta reveal" data-i18n="hero.cta">Read the story ↓</a>
-      </div>
-    </section>
-
-    <!-- ============================ ABOUT ============================ -->
-    <section class="about section" id="about">
-      <div class="section__inner about__inner">
-        <div class="about__copy">
-          <h2 class="section__title reveal" data-i18n="about.title">// THE STORY</h2>
-          <p class="section__intro reveal" data-i18n="about.intro">Two careers, one obsession: turning discipline into something that looks effortless.</p>
-          <p class="prose reveal" data-i18n="about.p1.html">I'm <strong>Sándor</strong>, born in <strong>Hungary</strong>, now living on the <strong>Côte d'Azur</strong>. For years I was a <strong>ballet dancer</strong> — a craft built on relentless repetition, where the goal is to make the impossible look weightless. That training never left me; it just found new stages.</p>
-          <p class="prose reveal" data-i18n="about.p2.html">Today I'm an <strong>AI-native indie developer</strong> and a <strong>photographer</strong>. I build games and apps on <strong>Linux</strong> and for <strong>Apple platforms</strong> with SwiftUI, write small <strong>Python</strong> tools for my own work, and shoot the Riviera on older digital cameras. AI lets one person build at a scale that used to take a studio — but the taste, the structure, and the vision stay human.</p>
-          <p class="prose reveal" data-i18n="about.p3.html">I'm not chasing the crowd or the hype cycle. I'd rather make a few honest things with care, and ship them native — close to the metal, close to the truth.</p>
-
-          <ul class="about__tags reveal" aria-label="In short">
-            <li class="about__tag" data-i18n="about.tag.ballet">Former ballet dancer</li>
-            <li class="about__tag" data-i18n="about.tag.builder">AI-native builder</li>
-            <li class="about__tag" data-i18n="about.tag.photographer">Photographer</li>
-            <li class="about__tag" data-i18n="about.tag.place">Riviera-based</li>
-          </ul>
-        </div>
-
-        <figure class="about__quote reveal">
-          <span class="bracket bracket--tl" aria-hidden="true"></span>
-          <span class="bracket bracket--br" aria-hidden="true"></span>
-          <blockquote data-i18n="about.philosophy">I create because the intersection of technology and creativity is where the world becomes clearest to me.</blockquote>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ============================ PHOTOGRAPHY ============================ -->
-    <section class="photo section" id="photo">
-      <div class="section__inner">
-        <header class="photo__header">
-          <h2 class="section__title reveal" data-i18n="photo.title">// PHOTOGRAPHY</h2>
-          <p class="section__intro reveal" data-i18n="photo.intro">The Riviera, on older digital cameras — light, water, and the quiet hours.</p>
-          <p class="prose reveal" data-i18n="photo.text">Shot around Nice and the Côte d'Azur. Tap any frame to open the gallery.</p>
-        </header>
-
-        <!-- Modern responsive masonry grid — populated by gallery.js from the curated set -->
-        <div class="photo__grid reveal" id="photo-grid" aria-label="Photo gallery"></div>
-      </div>
-    </section>
-
-    <!-- ============================ GAMES / NOVA UNIVERSE ============================ -->
-    <section class="games section" id="games">
-      <div class="section__inner">
-        <header class="games__header">
-          <h2 class="section__title reveal" data-i18n="games.title">// THE NOVA UNIVERSE</h2>
-          <p class="section__intro reveal" data-i18n="games.intro">My indie studio, BITO Games, is building one shared near-future world across two games.</p>
-          <p class="prose reveal" data-i18n="games.universe.lead.html"><strong>NOVA Universe</strong> is the continuity that ties my games together — one century, two ways to play it. Both are in development, both built native for Linux and macOS. The full studio lives at <strong>bitogames.com</strong>.</p>
-        </header>
-
-        <div class="games__grid">
-
-          <!-- ----- CYBER CITY 2089 ----- -->
-          <a class="card card--cyber reveal" href="https://bitogames.com" target="_blank" rel="noopener">
-            <div class="card__keyart" aria-hidden="true">
-              <div class="card__keyart-grid"></div>
-              <div class="card__keyart-skyline"></div>
-              <span class="card__keyart-tag">// KEY ART — WIP</span>
-              <span class="bracket bracket--tl"></span>
-              <span class="bracket bracket--br"></span>
-            </div>
-
-            <div class="card__body">
-              <span class="card__badge" data-i18n="games.cybercity.badge">IN DEVELOPMENT</span>
-              <h3 class="card__title" data-i18n="games.cybercity.title">CYBER CITY 2089</h3>
-              <p class="card__subtitle" data-i18n="games.cybercity.subtitle">Cyberpunk City Builder</p>
-              <p class="card__desc" data-i18n="games.cybercity.desc">Govern a neon city from the street up — districts, citizens, infrastructure, and the welfare slider that quietly decides who the future is for. A city builder with a conscience.</p>
-
-              <dl class="card__meta">
-                <div class="card__meta-row"><span data-i18n="games.cybercity.meta.engine">Engine: Godot 4</span></div>
-                <div class="card__meta-row"><span data-i18n="games.cybercity.meta.status">Status: In development</span></div>
-                <div class="card__meta-row"><span data-i18n="games.cybercity.meta.platforms">Platforms: Linux · macOS (native)</span></div>
-              </dl>
-            </div>
-          </a>
-
-          <!-- ----- MEGACORP 2100 ----- -->
-          <a class="card card--corp reveal" href="https://bitogames.com" target="_blank" rel="noopener">
-            <div class="card__keyart" aria-hidden="true">
-              <div class="card__keyart-grid"></div>
-              <div class="card__keyart-graph"></div>
-              <span class="card__keyart-tag">// KEY ART — WIP</span>
-              <span class="bracket bracket--tl"></span>
-              <span class="bracket bracket--br"></span>
-            </div>
-
-            <div class="card__body">
-              <span class="card__badge" data-i18n="games.megacorp.badge">IN DEVELOPMENT</span>
-              <h3 class="card__title" data-i18n="games.megacorp.title">MEGACORP 2100</h3>
-              <p class="card__subtitle" data-i18n="games.megacorp.subtitle">Sci-Fi Economic Simulation</p>
-              <p class="card__desc" data-i18n="games.megacorp.desc">Build from the boardroom down — supply chains, markets, and the quiet art of owning everything. Deep economic strategy set a decade further into the NOVA timeline.</p>
-
-              <dl class="card__meta">
-                <div class="card__meta-row"><span data-i18n="games.megacorp.meta.engine">Engine: Godot 4</span></div>
-                <div class="card__meta-row"><span data-i18n="games.megacorp.meta.status">Status: In development</span></div>
-                <div class="card__meta-row"><span data-i18n="games.megacorp.meta.platforms">Platforms: Linux · macOS (native)</span></div>
-              </dl>
-            </div>
-          </a>
-
-        </div>
-
-        <p class="games__cta-row reveal">
-          <a class="link-cta" href="https://bitogames.com" target="_blank" rel="noopener" data-i18n="games.cta">Visit the studio — bitogames.com →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- ============================ TOOLKIT ============================ -->
-    <section class="toolkit section" id="toolkit">
-      <div class="section__inner">
-        <header class="toolkit__header">
-          <h2 class="section__title reveal" data-i18n="toolkit.title">// THE TOOLKIT</h2>
-          <p class="section__intro reveal" data-i18n="toolkit.intro">Small, native tools — made one at a time, mostly for myself.</p>
-          <p class="prose reveal" data-i18n="toolkit.p.html">Beyond the games, I build native apps and quiet little utilities. Nothing here is a product pitch — these are the things a curious person makes when good tools are finally within reach. <strong>AI-native, human-led:</strong> I design the systems by hand and let the machine keep up.</p>
-        </header>
-
-        <div class="toolkit__grid">
-          <article class="tool reveal">
-            <span class="bracket bracket--tl" aria-hidden="true"></span>
-            <span class="bracket bracket--br" aria-hidden="true"></span>
-            <h3 class="tool__title" data-i18n="toolkit.swiftui.title">SwiftUI Apps</h3>
-            <p class="tool__desc" data-i18n="toolkit.swiftui.desc">Native applications and small games for the Apple ecosystem — macOS, iOS, and iPadOS — built the way Apple platforms deserve.</p>
-            <p class="tool__tag" data-i18n="toolkit.swiftui.tag">Swift · SwiftUI · Apple platforms</p>
-          </article>
-
-          <article class="tool reveal">
-            <span class="bracket bracket--tl" aria-hidden="true"></span>
-            <span class="bracket bracket--br" aria-hidden="true"></span>
-            <h3 class="tool__title" data-i18n="toolkit.kozlony.title">Magyar Közlöny Analyzer</h3>
-            <p class="tool__desc" data-i18n="toolkit.kozlony.desc">A Python tool that reads the Hungarian Official Gazette every day, extracts what matters, and summarizes it — automated on a Linux timer, with an AI assist for the analysis.</p>
-            <p class="tool__tag" data-i18n="toolkit.kozlony.tag">Python · systemd · AI</p>
-          </article>
-
-          <article class="tool reveal">
-            <span class="bracket bracket--tl" aria-hidden="true"></span>
-            <span class="bracket bracket--br" aria-hidden="true"></span>
-            <h3 class="tool__title" data-i18n="toolkit.mindprint.title">MindPrint Journal</h3>
-            <p class="tool__desc" data-i18n="toolkit.mindprint.desc">A minimalist journaling app for daily self-tracking — structured entries that turn scattered days into data I can actually reflect on over time.</p>
-            <p class="tool__tag" data-i18n="toolkit.mindprint.tag">Python · personal data</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ CONTACT ============================ -->
-    <section class="contact section" id="contact">
-      <div class="section__inner contact__inner reveal">
-        <div class="contact__panel">
-          <span class="bracket bracket--tl" aria-hidden="true"></span>
-          <span class="bracket bracket--tr" aria-hidden="true"></span>
-          <span class="bracket bracket--bl" aria-hidden="true"></span>
-          <span class="bracket bracket--br" aria-hidden="true"></span>
-
-          <h2 class="section__title" data-i18n="contact.title">// SAY HELLO</h2>
-          <p class="section__intro" data-i18n="contact.intro">Building something, shooting on the Riviera, or just curious about the work? I read every message.</p>
-
-          <div class="contact__links">
-            <a class="contact__link" href="mailto:sandor@sandorbito.com">
-              <span class="contact__link-label" data-i18n="contact.email.label">EMAIL</span>
-              <span class="contact__link-value">sandor@sandorbito.com</span>
-            </a>
-            <a class="contact__link" href="https://github.com/sandorbito" target="_blank" rel="noopener">
-              <span class="contact__link-label" data-i18n="contact.github.label">GITHUB</span>
-              <span class="contact__link-value">@sandorbito</span>
-            </a>
-            <a class="contact__link" href="https://www.linkedin.com/in/sandorbito/" target="_blank" rel="noopener">
-              <span class="contact__link-label" data-i18n="contact.linkedin.label">LINKEDIN</span>
-              <span class="contact__link-value">@sandorbito</span>
-            </a>
-            <a class="contact__link contact__link--studio" href="https://bitogames.com" target="_blank" rel="noopener">
-              <span class="contact__link-label" data-i18n="contact.studio.label">THE STUDIO</span>
-              <span class="contact__link-value">bitogames.com</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ============================ FOOTER ============================ -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <span class="footer__tagline" data-i18n="footer.tagline">Sándor Bitó · Between Linux and the sea</span>
-      <span class="footer__copy" data-i18n="footer.copy">© 2026 Sándor Bitó · Côte d'Azur · Made on Linux</span>
-    </div>
-  </footer>
-
-  <!-- ============================ LIGHTBOX ============================ -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <div class="lightbox__stage">
-      <img class="lightbox__img" id="lightbox-img" alt="">
-    </div>
-    <div class="lightbox__caption" id="lightbox-caption"></div>
-    <button class="lightbox__btn lightbox__close" id="lightbox-close" type="button" aria-label="Close" data-i18n-attr="aria-label:photo.lightbox.close">✕</button>
-    <button class="lightbox__btn lightbox__prev" id="lightbox-prev" type="button" aria-label="Previous" data-i18n-attr="aria-label:photo.lightbox.prev">‹</button>
-    <button class="lightbox__btn lightbox__next" id="lightbox-next" type="button" aria-label="Next" data-i18n-attr="aria-label:photo.lightbox.next">›</button>
+<header>
+  <div class="wrap">
+    <nav class="lang" role="group" aria-label="Nyelv / Language">
+      <button type="button" data-lang="hu">HU</button><span aria-hidden="true">|</span>
+      <button type="button" data-lang="en">EN</button><span aria-hidden="true">|</span>
+      <button type="button" data-lang="zh">中文</button>
+    </nav>
   </div>
+</header>
 
-  <script src="translations.js"></script>
-  <script src="matrix.js" defer></script>
-  <script src="gallery.js" defer></script>
-  <script src="script.js" defer></script>
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow" data-i18n="hero.eyebrow">Független indie stúdió</p>
+    <h1 data-i18n="hero.title">KÉT UNIVERZUM</h1>
+    <p class="lede" data-i18n="hero.lede">Mély rendszerek és meleg, retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.</p>
+  </section>
+
+  <section class="universes" aria-label="Univerzumok">
+    <a class="u" href="https://bitogames.com/#nova">
+      <img src="assets/branding/BITO_GAMES_NOVA_UNIVERSE_banner_v1_alpha.png" alt="NOVA Universe" loading="lazy" decoding="async" />
+      <span class="tag" data-i18n="nova.tag">Prémium sci-fi szimulációk</span>
+      <span class="go" data-i18n="cta">BELÉPÉS →</span>
+    </a>
+    <a class="u" href="https://bitogames.com/#pixel">
+      <img src="assets/branding/BITO_GAMES_PIXEL_ART_UNIVERSE_banner_v1_alpha.png" alt="Pixel Art Universe" loading="lazy" decoding="async" />
+      <span class="tag" data-i18n="pixel.tag">Meleg, retró pixel-világok</span>
+      <span class="go" data-i18n="cta">BELÉPÉS →</span>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="studio" href="https://bitogames.com" aria-label="BITO GAMES — bitogames.com">
+      <img src="assets/branding/BITO_GAMES_logo_v1_alpha.png" alt="BITO GAMES" />
+    </a>
+    <p class="visit" data-i18n="footer.visit">bitogames.com →</p>
+    <p class="copy" data-i18n="footer.copy">© 2026 BITO GAMES</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var T = {
+    hu:{
+      "page.title":"BITO GAMES — Két univerzum",
+      "page.desc":"Két univerzum, egy független indie stúdió: NOVA szimulációk és retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
+      "hero.eyebrow":"Független indie stúdió",
+      "hero.title":"KÉT UNIVERZUM",
+      "hero.lede":"Mély rendszerek és meleg, retró pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
+      "nova.tag":"Prémium sci-fi szimulációk",
+      "pixel.tag":"Meleg, retró pixel-világok",
+      "cta":"BELÉPÉS →",
+      "footer.visit":"bitogames.com →",
+      "footer.copy":"© 2026 BITO GAMES"
+    },
+    en:{
+      "page.title":"BITO GAMES — Two universes",
+      "page.desc":"Two universes, one independent indie studio: NOVA simulations and retro pixel worlds. Native games for Windows, macOS and Linux.",
+      "hero.eyebrow":"Independent indie studio",
+      "hero.title":"TWO UNIVERSES",
+      "hero.lede":"Deep systems and warm retro pixel worlds. Native games for Windows, macOS and Linux.",
+      "nova.tag":"Premium sci-fi simulations",
+      "pixel.tag":"Warm retro pixel worlds",
+      "cta":"ENTER →",
+      "footer.visit":"bitogames.com →",
+      "footer.copy":"© 2026 BITO GAMES"
+    },
+    zh:{
+      "page.title":"BITO GAMES — 两个宇宙",
+      "page.desc":"两个宇宙，一家独立工作室：NOVA 模拟与复古像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
+      "hero.eyebrow":"独立游戏工作室",
+      "hero.title":"两个宇宙",
+      "hero.lede":"深层系统与温暖的复古像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
+      "nova.tag":"高端科幻模拟",
+      "pixel.tag":"温暖的复古像素世界",
+      "cta":"进入 →",
+      "footer.visit":"bitogames.com →",
+      "footer.copy":"© 2026 BITO GAMES"
+    }
+  };
+  function apply(lang){
+    var d = T[lang] || T.hu;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var v = d[el.getAttribute('data-i18n')]; if(v!=null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-attr]').forEach(function(el){
+      el.getAttribute('data-i18n-attr').split(',').forEach(function(pair){
+        var p = pair.split(':'), v = d[p[1]]; if(v!=null) el.setAttribute(p[0].trim(), v);
+      });
+    });
+    if(d['page.title']) document.title = d['page.title'];
+    document.querySelectorAll('.lang button').forEach(function(b){
+      var on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try{ localStorage.setItem('bito_lang', lang); }catch(e){}
+  }
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
+  });
+  var saved = null;
+  try{ saved = localStorage.getItem('bito_lang'); }catch(e){}
+  var auto = (navigator.language||'hu').slice(0,2).toLowerCase();
+  apply(saved || (T[auto] ? auto : 'hu'));
+})();
+</script>
 </body>
 </html>
