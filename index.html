@@ -108,7 +108,7 @@
   <section class="hero">
     <p class="eyebrow" data-i18n="hero.eyebrow">Független indie stúdió</p>
     <h1 data-i18n="hero.title">KÉT UNIVERZUM</h1>
-    <p class="lede" data-i18n="hero.lede">Mély rendszerek és kézzel rajzolt pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.</p>
+    <p class="lede" data-i18n="hero.lede">Mély rendszerek és pixel art világok. Natív játékok Windowsra, macOS-re és Linuxra.</p>
   </section>
 
   <section class="universes" aria-label="Univerzumok">
@@ -119,7 +119,7 @@
     </a>
     <a class="u u--pixel" href="https://bitogames.com/#pixel">
       <img src="assets/branding/BITO_GAMES_PIXEL_ART_UNIVERSE_banner_v1_alpha.png" alt="Pixel Art Universe" loading="lazy" decoding="async" />
-      <span class="tag" data-i18n="pixel.tag">Kézzel rajzolt pixel-világok</span>
+      <span class="tag" data-i18n="pixel.tag">Pixel art világok</span>
       <span class="go" data-i18n="cta">BELÉPÉS →</span>
     </a>
   </section>
@@ -143,9 +143,9 @@
       "page.desc":"Két univerzum, egy független indie stúdió: NOVA szimulációk és pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
       "hero.eyebrow":"Független indie stúdió",
       "hero.title":"KÉT UNIVERZUM",
-      "hero.lede":"Mély rendszerek és kézzel rajzolt pixel-világok. Natív játékok Windowsra, macOS-re és Linuxra.",
+      "hero.lede":"Mély rendszerek és pixel art világok. Natív játékok Windowsra, macOS-re és Linuxra.",
       "nova.tag":"Prémium sci-fi szimulációk",
-      "pixel.tag":"Kézzel rajzolt pixel-világok",
+      "pixel.tag":"Pixel art világok",
       "cta":"BELÉPÉS →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
@@ -155,9 +155,9 @@
       "page.desc":"Two universes, one independent indie studio: NOVA simulations and pixel worlds. Native games for Windows, macOS and Linux.",
       "hero.eyebrow":"Independent indie studio",
       "hero.title":"TWO UNIVERSES",
-      "hero.lede":"Deep systems and hand-made pixel worlds. Native games for Windows, macOS and Linux.",
+      "hero.lede":"Deep systems and pixel art worlds. Native games for Windows, macOS and Linux.",
       "nova.tag":"Premium sci-fi simulations",
-      "pixel.tag":"Hand-made pixel worlds",
+      "pixel.tag":"Pixel art worlds",
       "cta":"ENTER →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
@@ -167,9 +167,9 @@
       "page.desc":"两个宇宙，一家独立工作室：NOVA 模拟与像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
       "hero.eyebrow":"独立游戏工作室",
       "hero.title":"两个宇宙",
-      "hero.lede":"深层系统与手工打造的像素世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
+      "hero.lede":"深层系统与像素艺术世界。为 Windows、macOS 和 Linux 打造的原生游戏。",
       "nova.tag":"高端科幻模拟",
-      "pixel.tag":"手工打造的像素世界",
+      "pixel.tag":"像素艺术世界",
       "cta":"进入 →",
       "footer.visit":"bitogames.com →",
       "footer.copy":"© 2026 BITO GAMES"
@@ -213,8 +213,23 @@
   var chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789';
   var arr = chars.split('');
   var fontSize = 16, columns = 0, drops = [], raf = null, last = 0, interval = 70;
+  var utolsoSzelesseg = 0;
   function resize(){
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    var w = window.innerWidth, h = window.innerHeight;
+    if(w === utolsoSzelesseg){
+      // csak a magasság változott (mobil görgetés: böngésző-sáv be/ki) ->
+      // NEM inicializálunk újra, csak a vászon magasságát igazítjuk, hogy ne álljon meg az eső
+      if(canvas.height !== h){
+        var mentes = document.createElement('canvas');
+        mentes.width = canvas.width; mentes.height = canvas.height;
+        mentes.getContext('2d').drawImage(canvas,0,0);
+        canvas.height = h;
+        ctx.drawImage(mentes,0,0);
+      }
+      return;
+    }
+    utolsoSzelesseg = w;
+    canvas.width = w; canvas.height = h;
     columns = Math.floor(canvas.width / fontSize);
     drops = new Array(columns).fill(1).map(function(){ return Math.random() * -100; });
   }
